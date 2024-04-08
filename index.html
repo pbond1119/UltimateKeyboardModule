@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>The Ultimate Online MIDI Effect Module</title>
+    <script src="synth.js" type="module"></script>
+    <link rel="stylesheet" href="./style.css"></style>
+    <!-- This script tag links to the WebMidi.js library, enabling MIDI functionality in the web browser. -->
+    <script src="https://cdn.jsdelivr.net/npm/webmidi@latest/dist/iife/webmidi.iife.js"></script>
+  </head>
+  <body>
+    <h1 style="padding-bottom: 20px">
+      <center>The Ultimate Online MIDI Effect Module</center>
+    </h1>
+    <h2 style="padding-left: 20px">I/O:</h2>
+    <p style="padding-left: 20px; padding-bottom: 10px">
+      <em
+        >Select your MIDI input device if using one with the dropdown box. Your
+        input will be the name of your MIDI controller</em
+      >
+    </p>
+    <div style="padding-left: 20px; padding-bottom: 20px">
+      <!-- A division or a section in an HTML document, used here to group the input device selector. -->
+      <label for="dropdown-insIO"
+        ><lead class="h3">Select a MIDI Input:</lead></label
+      >
+      <!-- The label tag defines a label for the select element below. The 'for' attribute specifies which form element the label is bound to. -->
+      <select id="dropdown-insIO">
+        <!-- The select tag represents a drop-down list. The id attribute is used to identify the element in CSS and JavaScript. -->
+        <!-- Options for the drop-down list are dynamically added through the script.js file. -->
+      </select>
+    </div>
+
+
+<ul style="padding-bottom: 50 px" id="keyboard">
+  <li note="C" class="white">A</li>
+  <li note="C#" class="black">W</li>
+  <li note="D" class="white offset">S</li>
+  <li note="D#" class="black">E</li>
+  <li note="E" class="white offset">D</li>
+  <li note="F" class="white">F</li>
+  <li note="F#" class="black">T</li>
+  <li note="G" class="white offset">G</li>
+  <li note="G#" class="black">Y</li>
+  <li note="A" class="white offset">H</li>
+  <li note="A#" class="black">U</li>
+  <li note="B" class="white offset">J</li>
+  <li note="C2" class="white">K</li>
+  <li note="C#2" class="black">O</li>
+  <li note="D2" class="white offset">L</li>
+  <li note="D#2" class="black">P</li>
+  <li note="E2" class="white offset">;</li>
+</ul>
+
+
+    <!-- the style in the following line allows the modules to be inline with each other -->
+    <!-- <div style="padding-top: 20px; display: inline-block; width: 10%">
+      <label for="attackSlider"><strong>Attack</strong></label>
+      <input
+        id="attackSlider"
+        type="range"
+        style="writing-mode: vertical-lr; direction: rtl"
+        min="0"
+        max="1000"
+        value="20"
+      /> -->
+      <!-- the style here makes slider vertical -->
+      <!-- <label for="attackSlider" id="attackDisplay">20 ms</label>
+    </div>
+    <div style="padding-top: 20px; display: inline-block; width: 11%">
+      <label for="releaseSlider"><strong>Release</strong></label>
+      <input
+        id="releaseSlider"
+        type="range"
+        style="writing-mode: vertical-lr; direction: rtl"
+        min="0"
+        max="1000"
+        value="500"
+      />
+      <label for="releaseSlider" id="releaseDisplay">500 ms</label>
+    </div>
+    <div style="padding-top: 20px; display: inline-block; width: 10%">
+      <label for="gainSlider"><strong>Gain</strong></label>
+      <input
+        id="gainSlider"
+        type="range"
+        style="writing-mode: vertical-lr; direction: rtl"
+        min="-70"
+        max="12"
+        value="-70"
+      />
+      <label for="gainSlider" id="gainDisplay">-70 dBFS</label>
+    </div> -->
+
+<meta name="viewport" content="width=50px, initial-scale=1">
+<style>
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 25%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+</style>
+</head>
+<body>
+
+  <div style="padding-top: 50px; padding-bottom: 50px; width: 10%;">
+      <label for="gainSlider"><strong>Gain</strong></label>
+      <input
+        id="gainSlider"
+        type="range"
+        style="writing-mode: vertical-lr; direction: rtl"
+        min="-70"
+        max="12"
+        value="-70"
+      />
+      <label for="gainSlider" id="gainDisplay">-70 dBFS</label>
+    </div>
+
+<h3 style="padding-top: 20px;">Oscillator 1</h3>
+<button style="display: inline-block;" id="asdrFolder1" type="button" class="collapsible">ASDR INFO HERE</button>
+<div class="content">
+      <!-- the style in the following line allows the modules to be inline with each other -->
+    <div style="padding-top: 20px; display: inline-block; width: 10%">
+      <label for="attackSlider1"><strong>Attack</strong></label>
+      <input
+        id="attackSlider1"
+        type="range"
+        style="writing-mode: vertical-lr; direction: rtl"
+        min="0"
+        max="1000"
+        value="20"
+      />
+      <!-- the style here makes slider vertical -->
+      <label for="attackSlider1" id="attackDisplay1">20 ms</label>
+    </div>
+    <div style="padding-top: 20px; display: inline-block; width: 11%">
+      <label for="decaySlider1"><strong>Decay</strong></label>
+      <input
+        id="decaySlider1"
+        type="range"
+        style="writing-mode: vertical-lr; direction: rtl"
+        min="0"
+        max="1000"
+        value="500"
+      />
+      <label for="decaySlider1" id="decayDisplay1">500 ms</label>
+    </div>
+    <div style="padding-top: 20px; display: inline-block; width: 11%">
+      <label for="sustainSlider1"><strong>Sustain</strong></label>
+      <input
+        id="sustainSlider1"
+        type="range"
+        style="writing-mode: vertical-lr; direction: rtl"
+        min="0"
+        max="1000"
+        value="500"
+      />
+      <label for="sustainSlider1" id="sustainDisplay1">1 db</label>
+    </div>
+    <div style="padding-top: 20px; display: inline-block; width: 11%">
+      <label for="releaseSlider1"><strong>Release</strong></label>
+      <input
+        id="releaseSlider1"
+        type="range"
+        style="writing-mode: vertical-lr; direction: rtl"
+        min="0"
+        max="1000"
+        value="500"
+      />
+      <label for="releaseSlider1" id="releaseDisplay1">500 ms</label>
+    </div>
+        <div style="padding-top: 20px; display: inline-block; width: 20%">
+      <label for="transposeSlider1"><strong>Transpose</strong></label>
+      <input
+        id="transposeSlider1"
+        type="range"
+        style="writing-mode: vertical-lr; direction: rtl"
+        min="0"
+        max="1000"
+        value="500"
+      />
+      <label for="transposeSlider1" id="transposeDisplay1">0 semitones</label>
+    </div>
+    
+</div>
+
+<h3 style="padding-top: 20px;">Oscillator 2</h3>
+<button style="display: inline-block;" id="asdrFolder2" type="button" class="collapsible">ASDR INFO HERE</button>
+<div class="content">
+      <!-- the style in the following line allows the modules to be inline with each other -->
+    <div style="padding-top: 20px; display: inline-block; width: 10%">
+      <label for="attackSlider2"><strong>Attack</strong></label>
+      <input
+        id="attackSlider2"
+        type="range"
+        style="writing-mode: vertical-lr; direction: rtl"
+        min="0"
+        max="1000"
+        value="20"
+      />
+      <!-- the style here makes slider vertical -->
+      <label for="attackSlider2" id="attackDisplay2">20 ms</label>
+    </div>
+    <div style="padding-top: 20px; display: inline-block; width: 11%">
+      <label for="decaySlider2"><strong>Decay</strong></label>
+      <input
+        id="decaySlider2"
+        type="range"
+        style="writing-mode: vertical-lr; direction: rtl"
+        min="0"
+        max="1000"
+        value="500"
+      />
+      <label for="decaySlider2" id="decayDisplay2">500 ms</label>
+    </div>
+    <div style="padding-top: 20px; display: inline-block; width: 11%">
+      <label for="sustainSlider2"><strong>Sustain</strong></label>
+      <input
+        id="sustainSlider2"
+        type="range"
+        style="writing-mode: vertical-lr; direction: rtl"
+        min="0"
+        max="1000"
+        value="500"
+      />
+      <label for="sustainSlider2" id="sustainDisplay2">1 db</label>
+    </div>
+    <div style="padding-top: 20px; display: inline-block; width: 11%">
+      <label for="releaseSlider2"><strong>Release</strong></label>
+      <input
+        id="releaseSlider2"
+        type="range"
+        style="writing-mode: vertical-lr; direction: rtl"
+        min="0"
+        max="1000"
+        value="500"
+      />
+      <label for="releaseSlider2" id="releaseDisplay2">500 ms</label>
+    </div>
+        <div style="padding-top: 20px; display: inline-block; width: 20%">
+      <label for="transposeSlider2"><strong>Transpose</strong></label>
+      <input
+        id="transposeSlider2"
+        type="range"
+        style="writing-mode: vertical-lr; direction: rtl"
+        min="0"
+        max="1000"
+        value="500"
+      />
+      <label for="transposeSlider2" id="transposeDisplay2">0 semitones</label>
+    </div>
+    
+</div>
+
+<h3>Effects</h3>
+<button id="chordFolder" type="button" class="collapsible">Chord Builder = "EITHER OFF OR QUALITY OF CHORD HERE</button>
+<div class="content">
+    <input type="radio" id="offChord" name="chordBuilder" value="off">
+<label for="html">Off</label><br>
+  <input type="radio" id="majChord" name="chordBuilder" value="maj">
+<label for="html">Major</label><br>
+  <input type="radio" id="minChord" name="chordBuilder" value="min">
+<label for="html">Minor</label><br>
+  <input type="radio" id="augChord" name="chordBuilder" value="aug">
+<label for="html">Augmented</label><br>
+  <input type="radio" id="dimChord" name="chordBuilder" value="dim">
+<label for="html">Diminished</label><br>
+  <input type="radio" id="maj7Chord" name="chordBuilder" value="maj7">
+<label for="html">Major 7</label><br>
+  <input type="radio" id="min7Chord" name="chordBuilder" value="min7">
+<label for="html">Minor 7</label><br>
+  <input type="radio" id="dom7Chord" name="chordBuilder" value="dom7">
+<label for="html">Dominant 7</label><br>
+</div>
+<button id="repeatFolder" type="button" class="collapsible">Note Repeat = "EITHER OFF OR SHOW INFO ABOUT REPEAT"</button>
+<div style="padding-top: 10px; padding-bottom: 10px"  class="content">
+  <select id="repeatDropdown"></select>
+</div>
+<button id="arpFolder" type="button" class="collapsible">Arpeggiator = "EITHER OFF OR SHOW INFO ABOUT APR</button>
+<div class="content">
+      <!-- BPM (Beats Per Minute) setting -->
+    <div>
+      <label for="bpmSet" id="bpmValue">Tempo: 120 bpm</label>
+      <input type="range" id="bpmSet" min="30" max="250" value="120" />
+    </div>
+
+    <!-- Subdivision setting for rhythmic patterns -->
+    <div>
+      <label for="subdiv">Subdivision:</label>
+      <select id="subdiv">
+        <!-- Options will be populated dynamically -->
+      </select>
+    </div>
+
+    <!-- Note Length setting -->
+    <div>
+      <label for="noteLength" id="noteLengthValue">Note Length: 100%</label>
+      <input type="range" id="noteLength" min="1" max="400" value="100" />
+    </div>
+</div>
+
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+  </body>
+</html>
