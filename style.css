@@ -16,8 +16,8 @@ body {
 }
 
 :root {
-  --keyboard: hsl(300, 100%, 16%);
-  --keyboard-shadow: hsla(19, 50%, 66%, 0.2);
+  --keyboard: hsl(300, 35%, 42%);
+  --keyboard-shadow: hsla(19, 88%, 13%, 0.2);
   --keyboard-border: hsl(20, 91%, 5%);
   --black-10: hsla(0, 0%, 0%, 0.1);
   --black-20: hsla(0, 0%, 0%, 0.2);

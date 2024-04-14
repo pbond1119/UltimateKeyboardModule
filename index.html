@@ -270,6 +270,7 @@
 </div>
 
 <h3>Effects</h3>
+
 <button id="chordFolder" type="button" class="collapsible">Chord Builder = "EITHER OFF OR QUALITY OF CHORD HERE</button>
 <div class="content">
     <input type="radio" id="offChord" name="chordBuilder" value="off">
@@ -289,9 +290,15 @@
   <input type="radio" id="dom7Chord" name="chordBuilder" value="dom7">
 <label for="html">Dominant 7</label><br>
 </div>
+
 <button id="repeatFolder" type="button" class="collapsible">Note Repeat = "EITHER OFF OR SHOW INFO ABOUT REPEAT"</button>
 <div style="padding-top: 10px; padding-bottom: 10px"  class="content">
-  <select id="repeatDropdown"></select>
+  <select id="repeatDropdown">
+    <option value="quarterNote">Quarter Note</option>
+    <option value="eigthNote">Eigth Note</option>
+    <option value="tripletNote">Triplet Note</option>
+    <option value="sixteenthNote">Sixteenth Note</option>
+  </select>
 </div>
 <button id="arpFolder" type="button" class="collapsible">Arpeggiator = "EITHER OFF OR SHOW INFO ABOUT APR</button>
 <div class="content">

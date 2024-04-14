@@ -1,7 +1,11 @@
 // CODE FROM https://css-tricks.com/how-to-code-a-playable-synth-keyboard/ NEEDS TO BE TWEAKED TO FIT MY USE CASE COPIED AS IS FOR NOW
+export function setupSynthKeyboard(){
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+
 const getElementByNote = (note) =>
   note && document.querySelector(`[note="${note}"]`);
+
 const keys = {
   A: { element: getElementByNote("C"), note: "C", octaveOffset: 0 },
   W: { element: getElementByNote("C#"), note: "C#", octaveOffset: 0 },
@@ -19,7 +23,7 @@ const keys = {
   O: { element: getElementByNote("C#2"), note: "C#", octaveOffset: 1 },
   L: { element: getElementByNote("D2"), note: "D", octaveOffset: 1 },
   P: { element: getElementByNote("D#2"), note: "D#", octaveOffset: 1 },
-  semicolon: { element: getElementByNote("E2"), note: "E", octaveOffset: 1 },
+  semicolon: { element: getElementByNote("E2"), note: "E", octaveOffset: 1 }
 };
 
 const getHz = (note = "A", octave = 4) => {
@@ -81,14 +85,40 @@ const playKey = (key) => {
     return;
   }
 
-  const osc = audioContext.createOscillator();
-  const noteGainNode = audioContext.createGain();
-  noteGainNode.connect(audioContext.destination);
-  noteGainNode.gain.value = 0.5;
+  const osc = siteAudio.createOscillator();
+  const noteGainNode = siteAudio.createGain();
+  noteGainNode.connect(siteAudio.destination);
+
+  const zeroGain = 0.00001;
+  const maxGain = 0.5;
+  const sustainedGain = 0.001;
+
+  noteGainNode.gain.value = zeroGain;
+
+  const setAttack = () =>
+    noteGainNode.gain.exponentialRampToValueAtTime(
+      maxGain,
+      siteAudio.currentTime + 0.01
+    );
+  const setDecay = () =>
+    noteGainNode.gain.exponentialRampToValueAtTime(
+      sustainedGain,
+      siteAudio.currentTime + 1
+    );
+  const setRelease = () =>
+    noteGainNode.gain.exponentialRampToValueAtTime(
+      zeroGain,
+      siteAudio.currentTime + 2
+    );
+
+  setAttack();
+  setDecay();
+  setRelease();
+
   osc.connect(noteGainNode);
   osc.type = "triangle";
 
-  const freq = getHz(keys[key].note, (keys[key].octaveOffset || 0) + 4);
+  const freq = getHz(keys[key].note, (keys[key].octaveOffset || 0) + 3);
 
   if (Number.isFinite(freq)) {
     osc.frequency.value = freq;
@@ -119,7 +149,7 @@ const stopKey = (key) => {
 document.addEventListener("keydown", (e) => {
   const eventKey = e.key.toUpperCase();
   const key = eventKey === ";" ? "semicolon" : eventKey;
-
+  
   if (!key || pressedNotes.get(key)) {
     return;
   }
@@ -129,7 +159,7 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("keyup", (e) => {
   const eventKey = e.key.toUpperCase();
   const key = eventKey === ";" ? "semicolon" : eventKey;
-
+  
   if (!key) {
     return;
   }
@@ -146,54 +176,5 @@ for (const [key, { element }] of Object.entries(keys)) {
 document.addEventListener("mouseup", () => {
   stopKey(clickedKey);
 });
+}
 
-const freq = getHz(keys[key].note, (keys[key].octaveOffset || 0) + 3);
-
-const playKey = (key) => {
-  if (!keys[key]) {
-    return;
-  }
-
-  const osc = audioContext.createOscillator();
-  const noteGainNode = audioContext.createGain();
-  noteGainNode.connect(audioContext.destination);
-
-  const zeroGain = 0.00001;
-  const maxGain = 0.5;
-  const sustainedGain = 0.001;
-
-  noteGainNode.gain.value = zeroGain;
-
-  const setAttack = () =>
-    noteGainNode.gain.exponentialRampToValueAtTime(
-      maxGain,
-      audioContext.currentTime + 0.01
-    );
-  const setDecay = () =>
-    noteGainNode.gain.exponentialRampToValueAtTime(
-      sustainedGain,
-      audioContext.currentTime + 1
-    );
-  const setRelease = () =>
-    noteGainNode.gain.exponentialRampToValueAtTime(
-      zeroGain,
-      audioContext.currentTime + 2
-    );
-
-  setAttack();
-  setDecay();
-  setRelease();
-
-  osc.connect(noteGainNode);
-  osc.type = "triangle";
-
-  const freq = getHz(keys[key].note, (keys[key].octaveOffset || 0) - 1);
-
-  if (Number.isFinite(freq)) {
-    osc.frequency.value = freq;
-  }
-
-  keys[key].element.classList.add("pressed");
-  pressedNotes.set(key, osc);
-  pressedNotes.get(key).start();
-};
