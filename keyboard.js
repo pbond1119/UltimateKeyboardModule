@@ -86,27 +86,28 @@ const playKey = (key) => {
   }
 
   const osc = siteAudio.createOscillator();
-  const noteGainNode = siteAudio.createGain();
-  noteGainNode.connect(siteAudio.destination);
+  const noteASDR = siteAudio.createGain();
+  const siteGain = siteAudio.createGain();
+  noteASDR.connect(siteAudio.destination);
 
   const zeroGain = 0.00001;
   const maxGain = 0.5;
   const sustainedGain = 0.001;
 
-  noteGainNode.gain.value = zeroGain;
+  noteASDR.gain.value = zeroGain;
 
   const setAttack = () =>
-    noteGainNode.gain.exponentialRampToValueAtTime(
+    noteASDR.gain.exponentialRampToValueAtTime(
       maxGain,
       siteAudio.currentTime + 0.01
     );
   const setDecay = () =>
-    noteGainNode.gain.exponentialRampToValueAtTime(
+    noteASDR.gain.exponentialRampToValueAtTime(
       sustainedGain,
       siteAudio.currentTime + 1
     );
   const setRelease = () =>
-    noteGainNode.gain.exponentialRampToValueAtTime(
+    noteASDR.gain.exponentialRampToValueAtTime(
       zeroGain,
       siteAudio.currentTime + 2
     );
@@ -115,7 +116,7 @@ const playKey = (key) => {
   setDecay();
   setRelease();
 
-  osc.connect(noteGainNode);
+  osc.connect(noteASDR);
   osc.type = "triangle";
 
   const freq = getHz(keys[key].note, (keys[key].octaveOffset || 0) + 3);

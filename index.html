@@ -168,11 +168,11 @@
         id="sustainSlider1"
         type="range"
         style="writing-mode: vertical-lr; direction: rtl"
-        min="0"
-        max="1000"
-        value="500"
+        min="-70"
+        max="0"
+        value="-35"
       />
-      <label for="sustainSlider1" id="sustainDisplay1">1 db</label>
+      <label for="sustainSlider1" id="sustainDisplay1">-35 db</label>
     </div>
     <div style="padding-top: 20px; display: inline-block; width: 11%">
       <label for="releaseSlider1"><strong>Release</strong></label>
@@ -192,13 +192,23 @@
         id="transposeSlider1"
         type="range"
         style="writing-mode: vertical-lr; direction: rtl"
-        min="0"
-        max="1000"
-        value="500"
+        min="-24"
+        max="24"
+        value="0"
       />
       <label for="transposeSlider1" id="transposeDisplay1">0 semitones</label>
     </div>
-    
+    <div style="display: inline-block; width: 30%">
+      <label for="waveShape1"><strong>Wave Shape</strong></label>
+      <select id="waveShape1">
+        <option value="sine">Sine</option>
+        <option value="square">Square</option>
+        <option value="sawtooth">Sawtooth</option>
+        <option value="triangle">Triangle</option>
+      </select>
+      </div>
+  </div>
+  
 </div>
 
 <h3 style="padding-top: 20px;">Oscillator 2</h3>
@@ -236,11 +246,11 @@
         id="sustainSlider2"
         type="range"
         style="writing-mode: vertical-lr; direction: rtl"
-        min="0"
-        max="1000"
-        value="500"
+        min="-70"
+        max="1"
+        value="-35"
       />
-      <label for="sustainSlider2" id="sustainDisplay2">1 db</label>
+      <label for="sustainSlider2" id="sustainDisplay2">-35 db</label>
     </div>
     <div style="padding-top: 20px; display: inline-block; width: 11%">
       <label for="releaseSlider2"><strong>Release</strong></label>
@@ -260,13 +270,21 @@
         id="transposeSlider2"
         type="range"
         style="writing-mode: vertical-lr; direction: rtl"
-        min="0"
-        max="1000"
-        value="500"
+        min="-24"
+        max="24"
+        value="0"
       />
       <label for="transposeSlider2" id="transposeDisplay2">0 semitones</label>
     </div>
-    
+    <div style="display: inline-block; width: 30%">
+      <label for="waveShape2"><strong>Wave Shape</strong></label>
+      <select id="waveShape2">
+        <option value="sine">Sine</option>
+        <option value="square">Square</option>
+        <option value="sawtooth">Sawtooth</option>
+        <option value="triangle">Triangle</option>
+      </select>
+      </div>
 </div>
 
 <h3>Effects</h3>
