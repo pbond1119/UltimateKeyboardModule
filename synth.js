@@ -1,3 +1,5 @@
+// impliment ontap feature for mobile use if time allows
+
 // Importing the Keyboard and Arpeggiator sdfg
 import { setupSynthKeyboard } from "./keyboard.js";
 import { Arpeggiator, MidiManager } from "./Arpeggiator.js";
@@ -10,11 +12,8 @@ await WebMidi.enable();
 // These devices can be used to send or receive MIDI messages.
 let myInput = WebMidi.inputs[0];
 
-
-
 // Create our Audio Context
 const siteAudio = new AudioContext();
-
 
 // grabbing HTML objects for external keyboard and volume
 let dropInsIO = document.getElementById("dropdown-insIO");
@@ -29,7 +28,6 @@ const releaseControl1 = document.getElementById("releaseSlider1");
 const transposeControl1 = document.getElementById("transposeSlider1");
 const waveShape1 = document.getElementById("waveShape1");
 
-
 // HTML objects for Oscilattor 2
 const asdrFolder2 = document.getElementById("asdrFolder2");
 const attackControl2 = document.getElementById("attackSlider2");
@@ -41,6 +39,7 @@ const waveShape2 = document.getElementById("waveShape2");
 
 // HTML objects for Chord Select Module
 const chordFolder = document.getElementById("chordFolder");
+const chordList = document.getElementById("chordList");
 const offChord = document.getElementById("offChord");
 const majChord = document.getElementById("majChord");
 const minChord = document.getElementById("minChord");
@@ -79,7 +78,6 @@ WebMidi.inputs.forEach(function (input, num) {
 // let oscillator1 = siteAudio.createOscillator();
 // let oscillator2 = siteAudio.createOscillator();
 
-
 // // connect nodes for signal flow
 // oscillator.connect(adsrNode);
 // adsrNode.connect(gainNode);
@@ -91,7 +89,6 @@ WebMidi.inputs.forEach(function (input, num) {
 
 // // start the oscillator
 // oscillator.start();
-
 
 // GETTING HTML FOR KEYS
 const getElementByNote = (note) =>
@@ -114,7 +111,7 @@ const keys = {
   O: { element: getElementByNote("C#2"), note: "C#", octaveOffset: 1 },
   L: { element: getElementByNote("D2"), note: "D", octaveOffset: 1 },
   P: { element: getElementByNote("D#2"), note: "D#", octaveOffset: 1 },
-  semicolon: { element: getElementByNote("E2"), note: "E", octaveOffset: 1 }
+  semicolon: { element: getElementByNote("E2"), note: "E", octaveOffset: 1 },
 };
 
 // Funtion to Determine Pitch of played not
@@ -169,7 +166,6 @@ const getHz = (note = "A", octave = 4) => {
   return A4 * Math.pow(2, N / 12);
 };
 
-
 const pressedNotes = new Map();
 let clickedKey = "";
 
@@ -185,64 +181,60 @@ const playKey = (key) => {
   const noteASDR2 = siteAudio.createGain();
   const siteGain = siteAudio.createGain();
 
-
   osc1.connect(noteASDR1);
   osc2.connect(noteASDR2);
-  noteASDR1.connect(siteGain)
-  noteASDR2.connect(siteGain)
+  noteASDR1.connect(siteGain);
+  noteASDR2.connect(siteGain);
   siteGain.connect(siteAudio.destination);
 
+  // INITIAL SETTINGS FOR OSCILLATOR 1
 
-// INITIAL SETTINGS FOR OSCILLATOR 1
-
-
-// this seems like it is in linamp, convert to decibels
+  // this seems like it is in linamp, convert to decibels
   const zeroGain = 0.00001;
   const maxGain = 0.5;
   const sustainedGain = 0.001;
 
-
   noteASDR1.gain.value = zeroGain;
   noteASDR2.gain.value = zeroGain;
 
-
   // ASDR FOR OSCILLATOR 1
   const setAttack1 = () =>
-  noteASDR1.gain.exponentialRampToValueAtTime(
-      maxGain,
+    noteASDR1.gain.exponentialRampToValueAtTime(
+      parseFloat(attackControl1.value),
       siteAudio.currentTime + 0.01
     );
   const setSustain1 = () =>
-   noteASDR1.gain.exponentialRampToValueAtTime(
+    noteASDR1.gain.exponentialRampToValueAtTime(
       maxGain,
       siteAudio.currentTime + 0.01
     );
   const setDecay1 = () =>
-  noteASDR1.gain.exponentialRampToValueAtTime(
+    noteASDR1.gain.exponentialRampToValueAtTime(
       sustainedGain,
       siteAudio.currentTime + 1
     );
   const setRelease1 = () =>
-  noteASDR1.gain.exponentialRampToValueAtTime(
+    noteASDR1.gain.exponentialRampToValueAtTime(
       zeroGain,
       siteAudio.currentTime + 2
     );
 
-  function setWaveShape1 () {
+  function setWaveShape1() {
     let selectedWaveShape1 = waveShape1.value;
-    osc1.type = selectedWaveShape1
+    osc1.type = selectedWaveShape1;
   }
   setAttack1();
   setDecay1();
   setRelease1();
   setWaveShape1();
 
-// ASDR FOR OSCILLATOR 1
+  console.log(attackControl1.value);
+  // ASDR FOR OSCILLATOR 2
   const setAttack2 = () =>
-  noteASDR1.gain.exponentialRampToValueAtTime(
+    noteASDR1.gain.exponentialRampToValueAtTime(
       maxGain,
       siteAudio.currentTime + 0.01
-     );
+    );
   const setSustain2 = () =>
     noteASDR1.gain.exponentialRampToValueAtTime(
       maxGain,
@@ -256,48 +248,45 @@ const playKey = (key) => {
   const setRelease2 = () =>
     noteASDR1.gain.exponentialRampToValueAtTime(
       zeroGain,
-       siteAudio.currentTime + 2
-      );
-  
-    function setWaveShape2 () {
-      let selectedWaveShape2 = waveShape2.value;
-      osc2.type = selectedWaveShape2
-    }
-    setAttack2();
-    setDecay2();
-    setRelease2();
-    setWaveShape2();
- 
-  
+      siteAudio.currentTime + 2
+    );
 
-    // // ASDR FOR OSCILLATOR 2
-    // const setAttack = () =>
-    // noteASDR2.gain.exponentialRampToValueAtTime(
-    //     maxGain,
-    //     siteAudio.currentTime + 0.01
-    //   );
-    // const setSustain = () =>
-    //  noteASDR2.gain.exponentialRampToValueAtTime(
-    //     maxGain,
-    //     siteAudio.currentTime + 0.01
-    //   );
-    // const setDecay = () =>
-    // noteASDR2.gain.exponentialRampToValueAtTime(
-    //     sustainedGain,
-    //     siteAudio.currentTime + 1
-    //   );
-    // const setRelease = () =>
-    // noteASDR2.gain.exponentialRampToValueAtTime(
-    //     zeroGain,
-    //     siteAudio.currentTime + 2
-    //   );
-  
-    // setAttack();
-    // setDecay();
-    // setRelease();
-  
-  
-    // osc2.type = "triangle";
+  function setWaveShape2() {
+    let selectedWaveShape2 = waveShape2.value;
+    osc2.type = selectedWaveShape2;
+  }
+  setAttack2();
+  setDecay2();
+  setRelease2();
+  setWaveShape2();
+
+  // // ASDR FOR OSCILLATOR 2
+  // const setAttack = () =>
+  // noteASDR2.gain.exponentialRampToValueAtTime(
+  //     maxGain,
+  //     siteAudio.currentTime + 0.01
+  //   );
+  // const setSustain = () =>
+  //  noteASDR2.gain.exponentialRampToValueAtTime(
+  //     maxGain,
+  //     siteAudio.currentTime + 0.01
+  //   );
+  // const setDecay = () =>
+  // noteASDR2.gain.exponentialRampToValueAtTime(
+  //     sustainedGain,
+  //     siteAudio.currentTime + 1
+  //   );
+  // const setRelease = () =>
+  // noteASDR2.gain.exponentialRampToValueAtTime(
+  //     zeroGain,
+  //     siteAudio.currentTime + 2
+  //   );
+
+  // setAttack();
+  // setDecay();
+  // setRelease();
+
+  // osc2.type = "triangle";
 
   const freq = getHz(keys[key].note, (keys[key].octaveOffset || 0) + 3);
 
@@ -319,7 +308,7 @@ const stopKey = (key) => {
   keys[key].element.classList.remove("pressed");
   const osc1 = pressedNotes.get(key);
   const osc2 = pressedNotes.get(key);
-  if (osc1, osc2) {
+  if ((osc1, osc2)) {
     setTimeout(() => {
       osc1.stop();
       osc2.stop();
@@ -332,7 +321,7 @@ const stopKey = (key) => {
 document.addEventListener("keydown", (e) => {
   const eventKey = e.key.toUpperCase();
   const key = eventKey === ";" ? "semicolon" : eventKey;
-  
+
   if (!key || pressedNotes.get(key)) {
     return;
   }
@@ -342,7 +331,7 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("keyup", (e) => {
   const eventKey = e.key.toUpperCase();
   const key = eventKey === ";" ? "semicolon" : eventKey;
-  
+
   if (!key) {
     return;
   }
@@ -359,7 +348,6 @@ for (const [key, { element }] of Object.entries(keys)) {
 document.addEventListener("mouseup", () => {
   stopKey(clickedKey);
 });
-
 
 // ASDR1 CONNECTION TO HTML Sliders
 // const updateASDRFolder1 = function (){
@@ -393,7 +381,9 @@ const updateRelease1 = function () {
 
 const updateTranspose1 = function () {
   let sliderVal = parseFloat(transposeControl1.value);
-  document.getElementById("transposeDisplay1").innerText = `${sliderVal} semitones`;
+  document.getElementById(
+    "transposeDisplay1"
+  ).innerText = `${sliderVal} semitones`;
 };
 
 // updateASDRFolder1();
@@ -421,10 +411,47 @@ const updateRelease2 = function () {
 
 const updateTranspose2 = function () {
   let sliderVal = parseFloat(transposeControl2.value);
-  document.getElementById("transposeDisplay2").innerText = `${sliderVal} semitones`;
+  document.getElementById(
+    "transposeDisplay2"
+  ).innerText = `${sliderVal} semitones`;
 };
 
+const updateGain = function () {
+  siteAudio.resume();
+  let sliderVal = parseFloat(gainControl.value);
+  document.getElementById("gainDisplay").innerText = `${sliderVal} dBFS`;
+  let linAmp = 10 ** (sliderVal / 20);
+  gainControl.gain.setValueAtTime(linAmp, siteAudio.currentTime);
+};
 
+// CHORD BUILDER
+document.getElementById("offChord").addEventListener("change", function () {
+  console.log(this.checked);
+  if (this.checked) {
+    console.log("Chord Build Off");
+  }
+});
+
+document.getElementById("majChord").addEventListener("change", function () {
+  console.log(this.checked);
+  if (this.checked) {
+    console.log("Chord Build = Major");
+  }
+});
+
+document.getElementById("minChord").addEventListener("change", function () {
+  console.log(this.checked);
+  if (this.checked) {
+    console.log("Chord Build = Minor");
+  }
+});
+
+document.getElementById("minChord").addEventListener("change", function () {
+  console.log(this.checked);
+  if (this.checked) {
+    console.log("Chord Build = Minor");
+  }
+});
 
 // EVENT LISTENERS
 // attackControl1.addEventListener("input", updateASDRFolder1Text);
@@ -433,6 +460,8 @@ const updateTranspose2 = function () {
 // decayControl1.addEventListener("input", updateASDRFolder1Text);
 // transposeControl1.addEventListener("input", updateASDRFolder1Text);
 // waveShape1.addEventListener("change", updateASDRFolder1Text);
+
+gainControl.addEventListener("input", updateGain);
 
 attackControl1.addEventListener("input", updateAttack1);
 decayControl1.addEventListener("input", updateDecay1);
@@ -447,9 +476,6 @@ sustainControl2.addEventListener("input", updateSustain2);
 releaseControl2.addEventListener("input", updateRelease2);
 transposeControl2.addEventListener("input", updateTranspose2);
 // waveShape2.addEventListener("change", setWaveShape2);
-
-
-
 
 // ONE THAT DOESNT WORK RN
 
@@ -606,7 +632,7 @@ transposeControl2.addEventListener("input", updateTranspose2);
 // document.addEventListener("keydown", (e) => {
 //   const eventKey = e.key.toUpperCase();
 //   const key = eventKey === ";" ? "semicolon" : eventKey;
-  
+
 //   if (!key || pressedNotes.get(key)) {
 //     return;
 //   }
@@ -616,7 +642,7 @@ transposeControl2.addEventListener("input", updateTranspose2);
 // document.addEventListener("keyup", (e) => {
 //   const eventKey = e.key.toUpperCase();
 //   const key = eventKey === ";" ? "semicolon" : eventKey;
-  
+
 //   if (!key) {
 //     return;
 //   }
@@ -633,12 +659,6 @@ transposeControl2.addEventListener("input", updateTranspose2);
 // document.addEventListener("mouseup", () => {
 //   stopKey(clickedKey);
 // });
-
-
-
-
-
-
 
 // // PUT RADIO STUFF CHORD BUILDER HERE (FIGURE OUT IF THERES A BETTER WAY TO DO IT)
 // // PUT NOTE REPEAT STUFF HERE
@@ -671,7 +691,6 @@ transposeControl2.addEventListener("input", updateTranspose2);
 
 // // start the oscillator
 // oscillator.start();
-
 
 // const updateGain = function () {
 //   siteAudio.resume();
@@ -726,7 +745,6 @@ transposeControl2.addEventListener("input", updateTranspose2);
 //   });
 // });
 
-
 // // Event Listeners
 // gainControl.addEventListener("input", updateGain);
 
@@ -735,7 +753,6 @@ transposeControl2.addEventListener("input", updateTranspose2);
 // sustainSlider1.addEventListener("input", updateAttack);
 // releaseControl1.addEventListener("input", updateRelease);
 // transposeSlider1.addEventListener("input", updateRelease);
-
 
 // attackControl2.addEventListener("input", updateAttack);
 // decaySlider2.addEventListener("input", updateRelease);
