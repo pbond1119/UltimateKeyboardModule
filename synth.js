@@ -1,4 +1,4 @@
-// Importing the Keyboard and Arpeggiator
+// Importing the Keyboard and Arpeggiator sdfg
 import { setupSynthKeyboard } from "./keyboard.js";
 import { Arpeggiator, MidiManager } from "./Arpeggiator.js";
 
