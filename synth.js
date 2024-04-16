@@ -1,4 +1,4 @@
-// impliment ontap feature for mobile use if time allows
+// impliment ontap feature for mobile use if time allows, CUT OUT SECOND OSCILLATOR
 
 // Importing the Keyboard and Arpeggiator sdfg
 import { setupSynthKeyboard } from "./keyboard.js";
