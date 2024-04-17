@@ -191,7 +191,6 @@ const playKey = (key) => {
   const sustainedGain = 0.001;
 
   noteASDR1.gain.value = zeroGain;
-  noteASDR2.gain.value = zeroGain;
 
   // ASDR FOR OSCILLATOR 1
   const setAttack1 = () =>
@@ -332,70 +331,61 @@ const updateGain = function () {
 };
 
 // CHORD BUILDER
-const chordBuilder = function () {
-  document.getElementById("offChord").addEventListener("change", function () {
-    console.log(this.checked);
-    if (this.checked) {
-      console.log("Chord Build Off");
-    }
-  });
+document.getElementById("offChord").addEventListener("change", function () {
+  console.log(this.checked);
+  if (this.checked) {
+    console.log("Chord Build Off");
+  }
+});
 
-  document.getElementById("majChord").addEventListener("change", function () {
-    console.log(this.checked);
-    if (this.checked) {
-      console.log("Chord Build = Major");
-    }
-  });
+document.getElementById("majChord").addEventListener("change", function () {
+  console.log(this.checked);
+  if (this.checked) {
+    console.log("Chord Build = Major");
+  }
+});
 
-  document.getElementById("minChord").addEventListener("change", function () {
-    console.log(this.checked);
-    if (this.checked) {
-      console.log("Chord Build = Minor");
-    }
-  });
+document.getElementById("minChord").addEventListener("change", function () {
+  console.log(this.checked);
+  if (this.checked) {
+    console.log("Chord Build = Minor");
+  }
+});
 
-  document.getElementById("augChord").addEventListener("change", function () {
-    console.log(this.checked);
-    if (this.checked) {
-      console.log("Chord Build = Augmented");
-    }
-  });
+document.getElementById("augChord").addEventListener("change", function () {
+  console.log(this.checked);
+  if (this.checked) {
+    console.log("Chord Build = Augmented");
+  }
+});
 
-  document.getElementById("dimChord").addEventListener("change", function () {
-    console.log(this.checked);
-    if (this.checked) {
-      console.log("Chord Build = Diminished");
-    }
-  });
+document.getElementById("dimChord").addEventListener("change", function () {
+  console.log(this.checked);
+  if (this.checked) {
+    console.log("Chord Build = Diminished");
+  }
+});
 
-  document.getElementById("maj7Chord").addEventListener("change", function () {
-    console.log(this.checked);
-    if (this.checked) {
-      console.log("Chord Build = Major 7");
-    }
-  });
+document.getElementById("maj7Chord").addEventListener("change", function () {
+  console.log(this.checked);
+  if (this.checked) {
+    console.log("Chord Build = Major 7");
+  }
+});
 
-  document.getElementById("min7Chord").addEventListener("change", function () {
-    console.log(this.checked);
-    if (this.checked) {
-      console.log("Chord Build = Minor 7");
-    }
-  });
+document.getElementById("min7Chord").addEventListener("change", function () {
+  console.log(this.checked);
+  if (this.checked) {
+    console.log("Chord Build = Minor 7");
+  }
+});
 
-  document.getElementById("dom7Chord").addEventListener("change", function () {
-    console.log(this.checked);
-    if (this.checked) {
-      console.log("Chord Build = Dominant 7");
-    }
-  });
-
-  const updateChordBuild = function () {
-    let chordQuality = parseFloat(transposeControl1.value);
-    document.getElementById(
-      "chordFolder"
-    ).innerText = `Chord Build = ${chordQuality} `;
-  };
-};
+document.getElementById("dom7Chord").addEventListener("change", function () {
+  console.log(this.checked);
+  if (this.checked) {
+    console.log("Chord Build = Dominant 7");
+  }
+});
 
 // EVENT LISTENERS
 // attackControl1.addEventListener("input", updateASDRFolder1Text);
