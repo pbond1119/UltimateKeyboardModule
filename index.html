@@ -13,27 +13,20 @@
     <h1 style="padding-bottom: 20px">
       <center>The Ultimate Online MIDI Effect Module</center>
     </h1>
-    <h2 style="padding-left: 20px">I/O:</h2>
-    <p style="padding-left: 20px; padding-bottom: 10px">
-      <em
-        >Select your MIDI input device if using one with the dropdown box. Your
-        input will be the name of your MIDI controller</em
-      >
-    </p>
-    <div style="padding-left: 20px; padding-bottom: 20px">
-      <!-- A division or a section in an HTML document, used here to group the input device selector. -->
-      <label for="dropdown-insIO"
-        ><lead class="h3">Select a MIDI Input:</lead></label
-      >
-      <!-- The label tag defines a label for the select element below. The 'for' attribute specifies which form element the label is bound to. -->
-      <select id="dropdown-insIO">
-        <!-- The select tag represents a drop-down list. The id attribute is used to identify the element in CSS and JavaScript. -->
-        <!-- Options for the drop-down list are dynamically added through the script.js file. -->
-      </select>
+    <div style="display: inline-block; align-items: center; padding-left: 20px; padding-top: 50px; padding-bottom: 50px; width: 20%;">
+      <label for="gainSlider"><strong>Gain</strong></label>
+      <input
+        id="gainSlider"
+        type="range"
+        style="writing-mode: vertical-lr; direction: rtl"
+        min="-70"
+        max="12"
+        value="-70"
+      />
+      <label for="gainSlider" id="gainDisplay">-70 dBFS</label>
     </div>
-
-
-<ul style="padding-bottom: 50 px" id="keyboard">
+<!-- CODE FROM https://css-tricks.com/how-to-code-a-playable-synth-keyboard/ -->
+<ul style="display: inline-block; padding-bottom: 50 px" id="keyboard">
   <li note="C" class="white">A</li>
   <li note="C#" class="black">W</li>
   <li note="D" class="white offset">S</li>
@@ -121,154 +114,84 @@
 </head>
 <body>
 
-  <div style="padding-top: 50px; padding-bottom: 50px; width: 10%;">
-      <label for="gainSlider"><strong>Gain</strong></label>
-      <input
-        id="gainSlider"
-        type="range"
-        style="writing-mode: vertical-lr; direction: rtl"
-        min="-70"
-        max="12"
-        value="-70"
-      />
-      <label for="gainSlider" id="gainDisplay">-70 dBFS</label>
-    </div>
 
-<h3 style="padding-top: 20px;">Oscillator</h3>
-<button style="display: inline-block; width: 100%; height: 50 px;" id="asdrFolder1" type="button" class="collapsible">ASDR INFO HERE</button>
-<div class="content">
-      <!-- the style in the following line allows the modules to be inline with each other -->
-    <div style="padding-top: 20px; display: inline-block; width: 15%">
-      <label for="attackSlider1"><strong>Attack</strong></label>
-      <input
-        id="attackSlider1"
-        type="range"
-        style="writing-mode: vertical-lr; direction: rtl"
-        min="0"
-        max="1000"
-        value="20"
-      />
-      <!-- the style here makes slider vertical -->
-      <label for="attackSlider1" id="attackDisplay1">20 ms</label>
-    </div>
-    <div style="padding-top: 20px; display: inline-block; width: 15%">
-      <label for="decaySlider1"><strong>Decay</strong></label>
-      <input
-        id="decaySlider1"
-        type="range"
-        style="writing-mode: vertical-lr; direction: rtl"
-        min="0"
-        max="1000"
-        value="500"
-      />
-      <label for="decaySlider1" id="decayDisplay1">500 ms</label>
-    </div>
-    <div style="padding-top: 20px; display: inline-block; width: 15%">
-      <label for="sustainSlider1"><strong>Sustain</strong></label>
-      <input
-        id="sustainSlider1"
-        type="range"
-        style="writing-mode: vertical-lr; direction: rtl"
-        min="-70"
-        max="0"
-        value="-35"
-      />
-      <label for="sustainSlider1" id="sustainDisplay1">-35 db</label>
-    </div>
-    <div style="padding-top: 20px; display: inline-block; width: 15%">
-      <label for="releaseSlider1"><strong>Release</strong></label>
-      <input
-        id="releaseSlider1"
-        type="range"
-        style="writing-mode: vertical-lr; direction: rtl"
-        min="0"
-        max="1000"
-        value="500"
-      />
-      <label for="releaseSlider1" id="releaseDisplay1">500 ms</label>
-    </div>
-        <div style="padding-top: 20px; display: inline-block; width: 20%">
-      <label for="transposeSlider1"><strong>Transpose</strong></label>
-      <input
-        id="transposeSlider1"
-        type="range"
-        style="writing-mode: vertical-lr; direction: rtl"
-        min="-24"
-        max="24"
-        value="0"
-      />
-      <label for="transposeSlider1" id="transposeDisplay1">0 semitones</label>
-    </div>
-    <div style="display: inline-block; width: 15%">
-      <label for="waveShape1"><strong>Wave Shape</strong></label>
-      <select id="waveShape1">
-        <option value="sine">Sine</option>
-        <option value="square">Square</option>
-        <option value="sawtooth">Sawtooth</option>
-        <option value="triangle">Triangle</option>
-      </select>
-      </div>
-  </div>
-  
+
+<h3 style="padding-top: 20px; padding-left: 20px">Oscillator</h3>
+<div style="padding-left: 20px">
+<div style="padding-top: 20px; display: inline-block; width: 15%">
+  <label for="attackSlider1"><strong>Attack</strong></label>
+  <input
+    id="attackSlider1"
+    type="range"
+    style="writing-mode: vertical-lr; direction: rtl"
+    min="0"
+    max="1000"
+    value="0"
+  />
+  <!-- the style here makes slider vertical -->
+  <label for="attackSlider1" id="attackDisplay1">0 ms</label>
 </div>
-
-
-
-<h3>Effects</h3>
-
-<button id="chordFolder" type="button" class="collapsible">Chord Builder = "EITHER OFF OR QUALITY OF CHORD HERE</button>
-<div class="content">
-  <form id="chordList">
-    <input type="radio" id="offChord" name="chordBuilder" value="off">
-<label for="html">Off</label><br>
-  <input type="radio" id="majChord" name="chordBuilder" value="maj">
-<label for="html">Major</label><br>
-  <input type="radio" id="minChord" name="chordBuilder" value="min">
-<label for="html">Minor</label><br>
-  <input type="radio" id="augChord" name="chordBuilder" value="aug">
-<label for="html">Augmented</label><br>
-  <input type="radio" id="dimChord" name="chordBuilder" value="dim">
-<label for="html">Diminished</label><br>
-  <input type="radio" id="maj7Chord" name="chordBuilder" value="maj7">
-<label for="html">Major 7</label><br>
-  <input type="radio" id="min7Chord" name="chordBuilder" value="min7">
-<label for="html">Minor 7</label><br>
-  <input type="radio" id="dom7Chord" name="chordBuilder" value="dom7">
-<label for="html">Dominant 7</label><br>
-</form>
+<div style="padding-top: 20px; display: inline-block; width: 15%">
+  <label for="decaySlider1"><strong>Decay</strong></label>
+  <input
+    id="decaySlider1"
+    type="range"
+    style="writing-mode: vertical-lr; direction: rtl"
+    min="0"
+    max="1000"
+    value="0"
+  />
+  <label for="decaySlider1" id="decayDisplay1">0 ms</label>
 </div>
-
-<button id="repeatFolder" type="button" class="collapsible">Note Repeat = "EITHER OFF OR SHOW INFO ABOUT REPEAT"</button>
-<div style="padding-top: 10px; padding-bottom: 10px"  class="content">
-  <select id="repeatDropdown">
-    <option value="quarterNote">Quarter Note</option>
-    <option value="eigthNote">Eigth Note</option>
-    <option value="tripletNote">Triplet Note</option>
-    <option value="sixteenthNote">Sixteenth Note</option>
+<div style="padding-top: 20px; display: inline-block; width: 15%">
+  <label for="sustainSlider1"><strong>Sustain</strong></label>
+  <input
+    id="sustainSlider1"
+    type="range"
+    style="writing-mode: vertical-lr; direction: rtl"
+    min="-70"
+    max="0"
+    value="-70"
+  />
+  <label for="sustainSlider1" id="sustainDisplay1">-70 db</label>
+</div>
+<div style="padding-top: 20px; display: inline-block; width: 15%">
+  <label for="releaseSlider1"><strong>Release</strong></label>
+  <input
+    id="releaseSlider1"
+    type="range"
+    style="writing-mode: vertical-lr; direction: rtl"
+    min="0"
+    max="1000"
+    value="0"
+  />
+  <label for="releaseSlider1" id="releaseDisplay1">0 ms</label>
+</div>
+    <div style="padding-top: 20px; display: inline-block; width: 20%">
+  <label for="transposeSlider1"><strong>Transpose</strong></label>
+  <input
+    id="transposeSlider1"
+    type="range"
+    style="writing-mode: vertical-lr; direction: rtl"
+    min="-24"
+    max="24"
+    value="0"
+  />
+  <label for="transposeSlider1" id="transposeDisplay1">0 semitones</label>
+</div>
+<div style="display: inline-block; width: 15%">
+  <label for="waveShape1"><strong>Wave Shape</strong></label>
+  <select id="waveShape1">
+    <option value="sine">Sine</option>
+    <option value="square">Square</option>
+    <option value="sawtooth">Sawtooth</option>
+    <option value="triangle">Triangle</option>
   </select>
+  </div>\
 </div>
-<button id="arpFolder" type="button" class="collapsible">Arpeggiator = "EITHER OFF OR SHOW INFO ABOUT APR</button>
-<div class="content">
-      <!-- BPM (Beats Per Minute) setting -->
-    <div>
-      <label for="bpmSet" id="bpmValue">Tempo: 120 bpm</label>
-      <input type="range" id="bpmSet" min="30" max="250" value="120" />
-    </div>
 
-    <!-- Subdivision setting for rhythmic patterns -->
-    <div>
-      <label for="subdiv">Subdivision:</label>
-      <select id="subdiv">
-        <!-- Options will be populated dynamically -->
-      </select>
-    </div>
 
-    <!-- Note Length setting -->
-    <div>
-      <label for="noteLength" id="noteLengthValue">Note Length: 100%</label>
-      <input type="range" id="noteLength" min="1" max="400" value="100" />
-    </div>
-</div>
+
 
 
 <script>
