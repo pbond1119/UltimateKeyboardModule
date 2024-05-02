@@ -10,10 +10,10 @@
     <script src="https://cdn.jsdelivr.net/npm/webmidi@latest/dist/iife/webmidi.iife.js"></script>
   </head>
   <body>
-    <h1 style="padding-bottom: 20px">
+    <h1 style="padding-bottom: 50px">
       <center>The Ultimate Online MIDI Effect Module</center>
     </h1>
-    <div style="display: inline-block; align-items: center; padding-left: 20px; padding-top: 50px; padding-bottom: 50px; width: 20%;">
+    <div style="display: inline-block; align-items: center; padding-left: 80px; padding-top: 50px; padding-bottom: 50px; width: 27%;">
       <label for="gainSlider"><strong>Gain</strong></label>
       <input
         id="gainSlider"
@@ -26,7 +26,7 @@
       <label for="gainSlider" id="gainDisplay">-70 dBFS</label>
     </div>
 <!-- CODE FROM https://css-tricks.com/how-to-code-a-playable-synth-keyboard/ -->
-<ul style="display: inline-block; padding-bottom: 50 px" id="keyboard">
+<ul style="display: inline-block; padding-bottom: 50 px" id="keyboard"><center>
   <li note="C" class="white">A</li>
   <li note="C#" class="black">W</li>
   <li note="D" class="white offset">S</li>
@@ -86,103 +86,76 @@
       <label for="gainSlider" id="gainDisplay">-70 dBFS</label>
     </div> -->
 
-<meta name="viewport" content="width=50px, initial-scale=1">
-<style>
-.collapsible {
-  background-color: #777;
-  color: white;
-  cursor: pointer;
-  padding: 18px;
-  width: 25%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
-}
-
-.active, .collapsible:hover {
-  background-color: #555;
-}
-
-.content {
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  background-color: #f1f1f1;
-}
-</style>
-</head>
-<body>
+ 
 
 
-
-<h3 style="padding-top: 20px; padding-left: 20px">Oscillator</h3>
-<div style="padding-left: 20px">
-<div style="padding-top: 20px; display: inline-block; width: 15%">
-  <label for="attackSlider1"><strong>Attack</strong></label>
-  <input
-    id="attackSlider1"
-    type="range"
-    style="writing-mode: vertical-lr; direction: rtl"
-    min="0"
-    max="1000"
-    value="0"
-  />
-  <!-- the style here makes slider vertical -->
-  <label for="attackSlider1" id="attackDisplay1">0 ms</label>
-</div>
-<div style="padding-top: 20px; display: inline-block; width: 15%">
-  <label for="decaySlider1"><strong>Decay</strong></label>
-  <input
-    id="decaySlider1"
-    type="range"
-    style="writing-mode: vertical-lr; direction: rtl"
-    min="0"
-    max="1000"
-    value="0"
-  />
-  <label for="decaySlider1" id="decayDisplay1">0 ms</label>
-</div>
-<div style="padding-top: 20px; display: inline-block; width: 15%">
-  <label for="sustainSlider1"><strong>Sustain</strong></label>
-  <input
-    id="sustainSlider1"
-    type="range"
-    style="writing-mode: vertical-lr; direction: rtl"
-    min="-70"
-    max="0"
-    value="-70"
-  />
-  <label for="sustainSlider1" id="sustainDisplay1">-70 db</label>
-</div>
-<div style="padding-top: 20px; display: inline-block; width: 15%">
-  <label for="releaseSlider1"><strong>Release</strong></label>
-  <input
-    id="releaseSlider1"
-    type="range"
-    style="writing-mode: vertical-lr; direction: rtl"
-    min="0"
-    max="1000"
-    value="0"
-  />
-  <label for="releaseSlider1" id="releaseDisplay1">0 ms</label>
-</div>
-<div style="display: inline-block; width: 15%">
-  <label for="waveShape1"><strong>Wave Shape</strong></label>
-  <select id="waveShape1">
-    <option value="sine">Sine</option>
-    <option value="square">Square</option>
-    <option value="sawtooth">Sawtooth</option>
-    <option value="triangle">Triangle</option>
-  </select>
+<div class="synthcontrols" style="padding-top: 50px; padding-bottom: 50px">
+  <h3 style="padding-top: 20px; padding-left: 20px">Envelope Settings</h3>
+  <div style="padding-left: 20px">
+    <div style="padding-top: 20px; display: inline-block; width: 15%">
+    <label for="attackSlider1"><strong>Attack</strong></label>
+    <input
+      id="attackSlider1"
+      type="range"
+      style="writing-mode: vertical-lr; direction: rtl"
+      min="0"
+      max="1000"
+      value="0"
+    />
+    <!-- the style here makes slider vertical -->
+    <label for="attackSlider1" id="attackDisplay1">0 ms</label>
   </div>
+  <div style="padding-top: 20px; display: inline-block; width: 15%">
+    <label for="decaySlider1"><strong>Decay</strong></label>
+    <input
+      id="decaySlider1"
+      type="range"
+      style="writing-mode: vertical-lr; direction: rtl"
+      min="0"
+      max="1000"
+      value="0"
+    />
+    <label for="decaySlider1" id="decayDisplay1">0 ms</label>
+  </div>
+  <div style="padding-top: 20px; display: inline-block; width: 15%">
+    <label for="sustainSlider1"><strong>Sustain</strong></label>
+    <input
+      id="sustainSlider1"
+      type="range"
+      style="writing-mode: vertical-lr; direction: rtl"
+      min="-70"
+      max="0"
+      value="-70"
+    />
+    <label for="sustainSlider1" id="sustainDisplay1">-70 db</label>
+  </div>
+  <div style="padding-top: 20px; display: inline-block; width: 15%">
+    <label for="releaseSlider1"><strong>Release</strong></label>
+    <input
+      id="releaseSlider1"
+      type="range"
+      style="writing-mode: vertical-lr; direction: rtl"
+      min="0"
+      max="1000"
+      value="0"
+    />
+    <label for="releaseSlider1" id="releaseDisplay1">0 ms</label>
+  </div>
+  <div style="display: inline-block; width: 15%">
+    <label for="waveShape1"><strong>Wave Shape</strong></label>
+    <select id="waveShape1">
+      <option value="sine">Sine</option>
+      <option value="square">Square</option>
+      <option value="sawtooth">Sawtooth</option>
+      <option value="triangle">Triangle</option>
+    </select>
+    </div>
+</div>
 </div>
 
 
 
-
-
-<script>
+<!-- <script>
 var coll = document.getElementsByClassName("collapsible");
 var i;
 
@@ -197,6 +170,6 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
-</script>
+</script> -->
   </body>
 </html>
