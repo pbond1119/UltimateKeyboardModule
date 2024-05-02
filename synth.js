@@ -31,6 +31,17 @@ const waveShape1 = document.getElementById("waveShape1");
 
 
 
+// compressor to control distortion
+const compressor = siteAudio.createDynamicsCompressor();
+compressor.threshold.setValueAtTime(-40, siteAudio.currentTime);
+compressor.knee.setValueAtTime(40, siteAudio.currentTime);
+compressor.ratio.setValueAtTime(4, siteAudio.currentTime);
+compressor.attack.setValueAtTime(.02, siteAudio.currentTime);
+compressor.release.setValueAtTime(0.25, siteAudio.currentTime);
+
+
+
+
 // GETTING HTML FOR KEYS; JS AND HTML CODE MODIFIED BASED ON THIS CODE CODE FROM https://css-tricks.com/how-to-code-a-playable-synth-keyboard/
 const getElementByNote = (note) =>
   note && document.querySelector(`[note="${note}"]`);
@@ -143,7 +154,8 @@ const playKey = function (key) {
 
   // making the oscillator and making sure it is connected when a key is played
   osc1.connect(noteADSR1);
-  noteADSR1.connect(siteGain);
+  noteADSR1.connect(compressor);
+  compressor.connect(siteGain)
   console.log(key.note);
 
   activeVoices.set(keyGrab.note, { osc1, noteADSR1 });
@@ -171,12 +183,13 @@ const playKey = function (key) {
     siteAudio.currentTime + adsr1.attack
   );
   noteADSR1.gain.linearRampToValueAtTime(
+    adsr1.sustain,
+    siteAudio.currentTime + adsr1.attack + adsr1.decay)
+  noteADSR1.gain.linearRampToValueAtTime(
     0,
     siteAudio.currentTime + adsr1.decay);
-  noteADSR1.gain.linearRampToValueAtTime(
-    adsr1.sustain,
-    siteAudio.currentTime + adsr1.attack + adsr1.decay
-  );
+
+  ;
  
   console.log(adsr1.attack, adsr1.decay, adsr1.sustain, adsr1.release);
 
